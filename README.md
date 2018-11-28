@@ -8,17 +8,46 @@
 
 Using **Clustering** algorithm to dig out the similarity between crime events.
 
+There are **2** parts in this demo.
+
+
+
 In this demo, we will apply **KMeans** algorithm to cluster the crime data and find out some **similarity** between **robbery** crime events.
+
+
+
+## Crime Hot Spots Clustering K-Medoids (2017)
 
 
 
 ## Get Started
 
 - Open Terminal/Cmd/Bash
+- Clone this Repo
+- Switch to the directory of **crime-clustering-kmedoids**
+- Type `python -m http.server 1234` (MAKE SURE your are using Python **3.x**)
+- Open your Browser and visit `http://localhost:1234/`
+
+```bash
+$ git clone https://github.com/tsengkasing/Crime-Hot-Spots-Visualization.git
+$ cd Crime-Hot-Spots-Visualization
+$ cd crime-clustering-kmedoids
+$ python -m http.server 1235
+```
+
+
+
+
+
+## Crime Hot Spots With TimeLine (Robbery 2017)
+
+### Get Started
+
+- Open Terminal/Cmd/Bash
 
 - Clone this Repo
 
-- Switch to the directory of **build**
+- Switch to the directory of **crime-robbery-2017-timeline**
 
 - Type `python -m http.server 1234` (MAKE SURE your are using Python **3.x**)
 
@@ -28,7 +57,8 @@ In this demo, we will apply **KMeans** algorithm to cluster the crime data and f
 
 ```bash
 $ git clone https://github.com/tsengkasing/Crime-Hot-Spots-Visualization.git
-$ cd build
+$ cd Crime-Hot-Spots-Visualization
+$ cd crime-robbery-2017-timeline
 $ python -m http.server 1234
 ```
 
@@ -40,7 +70,7 @@ Gif of step by step ↓
 
 
 
-## Tiny Conclusion
+### Tiny Conclusion
 
 After several attempts, we cluster the data into 3 cluster.
 
@@ -59,7 +89,7 @@ However, **Cluster 1** and **Cluster 2** will happen more in **suburb** .
 
 
 
-## Implementation Method Introduction
+### Implementation Method Introduction
 
 [P.S.] The following processing code is placed in `cluster-crime-hot-spots.py`.
 
