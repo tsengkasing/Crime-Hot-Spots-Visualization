@@ -12,21 +12,17 @@ There are **2** parts in this demo.
 
 
 
-In this demo, we will apply **KMeans** algorithm to cluster the crime data and find out some **similarity** between **robbery** crime events.
+## 1. Crime Hot Spots Clustering K-Medoids (2017)
 
+In this demo, we will apply **KMedoids** algorithm to cluster the crime data and find out some **similarity** between different crime events.
 
-
-## Crime Hot Spots Clustering K-Medoids (2017)
-
-
-
-## Get Started
+### Get Started (Without rebuild dataset)
 
 - Open Terminal/Cmd/Bash
 - Clone this Repo
 - Switch to the directory of **crime-clustering-kmedoids**
-- Type `python -m http.server 1234` (MAKE SURE your are using Python **3.x**)
-- Open your Browser and visit `http://localhost:1234/`
+- Type `python -m http.server 1235` (MAKE SURE your are using Python **3.x**)
+- Open your Browser and visit `http://localhost:1235/`
 
 ```bash
 $ git clone https://github.com/tsengkasing/Crime-Hot-Spots-Visualization.git
@@ -37,9 +33,21 @@ $ python -m http.server 1235
 
 
 
+Gif of step by step ↓
+
+![crime-kmedoids-v](https://user-images.githubusercontent.com/10103993/49155366-b89f0880-f355-11e8-951b-65662e14bb44.gif)
 
 
-## Crime Hot Spots With TimeLine (Robbery 2017)
+
+### Rebuild Dataset
+
+
+
+
+
+## 2. Crime Hot Spots With TimeLine (Robbery 2017)
+
+In this demo, we will apply **KMeans** algorithm to cluster the crime data and find out some **similarity** between **robbery** crime events within a time period.
 
 ### Get Started
 
@@ -66,7 +74,8 @@ $ python -m http.server 1234
 
 Gif of step by step ↓
 
-![crimehotspot-visual-step](https://user-images.githubusercontent.com/10103993/49131409-034b6100-f313-11e8-9db0-46c58db2e487.gif)
+![crime-robbery-2017-v](https://user-images.githubusercontent.com/10103993/49153772-a4f1a300-f351-11e8-9a41-ea84a43ab651.gif)
+
 
 
 
