@@ -23,7 +23,8 @@ const colorTable = [
 
 const circles = {};
 
-let cCount = 0;
+/* @brief Number of Clustering */
+let cCount = 10;
 
 class App extends Component {
     constructor(props) {
@@ -71,7 +72,7 @@ class App extends Component {
         for (const [category, digit] of plots) {
             _cMap[digit] = category;
         }
-        cCount = 2;
+        cCount = 10;
         this.setState({checkedType: new Array(6).fill(true)});
 
         res = await fetch('/result-data.json');
