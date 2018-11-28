@@ -1,0 +1,47 @@
+Category Name,Parrent Node Name,Leaf Node Count,Node Layer
+ARSON,Crime_Against_Property,1,3
+ASSAULT,Offence_Against_Person,1,3
+BAD CHECKS,Crime_Against_Property,1,3
+BRIBERY,Crime_Against_Property,1,3
+BURGLARY,Theft,1,4
+DISORDERLY CONDUCT,Crime_Against_Public,1,3
+DRIVING UNDER THE INFLUENCE,Crime_Against_Public,1,3
+DRUG/NARCOTIC,Illegal_Consumption,1,4
+DRUNKENNESS,Illegal_Consumption,1,4
+EMBEZZLEMENT,Crime_Against_Property,1,3
+EXTORTION,Crime_Against_Property,1,3
+FAMILY OFFENSES,Offence_Against_Person,1,3
+FORGERY/COUNTERFEITING,Crime_Against_Property,1,3
+FRAUD,Crime_Against_Property,1,3
+GAMBLING,Crime_Against_Property,1,3
+KIDNAPPING,Offence_Against_Person,1,3
+LARCENY/THEFT,Theft,1,4
+LIQUOR LAWS,Illegal_Consumption,1,4
+LOITERING,Crime_Against_Public,1,3
+MISSING PERSON,Case,1,1
+NON-CRIMINAL,Case,1,1
+OTHER OFFENSES,Crime,1,2
+PORNOGRAPHY/OBSCENE MAT,Sex_Offenses,1,3
+PROSTITUTION,Sex_Offenses,1,3
+RECOVERED VEHICLE,Theft,1,4
+ROBBERY,Theft,1,4
+RUNAWAY,Crime,1,2
+SECONDARY CODES,Crime_Against_Property,1,3
+"SEX OFFENSES, FORCIBLE",Sex_Offenses,1,3
+"SEX OFFENSES, NON FORCIBLE",Sex_Offenses,1,3
+STOLEN PROPERTY,Theft,1,4
+SUICIDE,Crime_Against_Public,1,3
+SUSPICIOUS OCC,Case,1,1
+TRESPASS,Offence_Against_Person,1,3
+VANDALISM,Crime_Against_Public,1,3
+VEHICLE THEFT,Theft,1,4
+WARRANTS,Case,1,1
+WEAPON LAWS,Crime_Against_Public,1,3
+Case,Case,38,0
+Crime,Case,34,1
+Crime_Against_Property,Crime,15,2
+Crime_Against_Public,Crime,9,2
+Illegal_Consumption,Crime_Against_Public,3,3
+Offence_Against_Person,Crime,4,2
+Sex_Offenses,Crime,4,2
+Theft,Crime_Against_Property,6,3

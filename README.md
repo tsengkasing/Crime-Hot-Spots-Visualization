@@ -39,9 +39,58 @@ Gif of step by step ↓
 
 
 
-### Rebuild Dataset
+### Get Started (Rebuild Dataset)
 
+#### Using the preprocess.py:
 
+preprocess.py is used for preprocess the dataset, mainly about split the dataset into several parts.
+
+command:
+```bash
+python ./preprocess.py (splitByYear|splitByMonth|Sampling) dataFilePath SampleNum
+```
+|Param Name| Description |
+| ---- | ----  |
+| splitByYear | the datafile will be split into different different years|
+|splitByMonth | the datafile will be split into different Months. It is suggested that to excute on the file which has already been splited into different years, because it will only deal with the month string。 |
+| Sampling | generate samples of the data file |
+| dataFilePath| the path of the datafile |
+| SampleNum | should be integer, and is necessarily needed when the command is Sampling. |
+
+Examples:
+```bash
+python ./preprocess.py Sampling ./Police_Department_Incident_Reports__Historical_2003_to_May_2018-2018.csv 500
+```
+#### Using the k-medoids-clustering.py:
+k-medoids-clustering.py is the k-medoids-clustering process, it will do clustering under the input data file, and output clustering results.
+command:
+```bash
+python ./k-medoids-clustering.py kNum dataFilePath
+```
+| Param Name | Description |
+| --- | --- |
+|kNum | the k in an algorithm, which is the number of target clusters. If this argument is not  provided, the algorithm will be running of 5 as the value of K. |
+| dataFilePath | the path of dataFile. If it is not provided, the algorithm will do clustering on default file Police_Department_Incident_Reports__Historical_2003_to_May_2018-2017-sample-500.csv |
+
+Examples:
+```bash
+python ./k-medoids-clustering.py 5 Police_Department_Incident_Reports__Historical_2003_to_May_2018-2017-sample-500.csv
+```
+	
+Outputs:
+- result-k-kNum-time-hour-min-sec.txt
+- result-k-kNum-time-hour-min-sec.png
+- result-k-kNum-time-hour-min-sec-data.json
+- result-k-kNum-time-hour-min-sec-plot.json
+	
+- result-k-kNum-time-hour-min-sec.txt:
+	It records some basic result of the clustering, such as: iteration rounds, SSE of the final clusters, SilhouetteCoeficient, medoids' index, data cluster results
+	
+- result-k-kNum-time-hour-min-sec.png:
+	It is a 2-dimensional diagram of the clustering result. It takes attribute Crime Catagory as axis y, attribute Time as axis x.
+	
+- result-k-kNum-time-hour-min-sec-data.json, result-k-kNum-time-hour-min-sec-plot.json:
+	These 2 files are the inputs for visualization.
 
 
 
