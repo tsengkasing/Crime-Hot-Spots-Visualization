@@ -14,7 +14,7 @@ span, div {
 
 #slider {
   left: 10%;
-  position: absolute;
+  position: fixed;
   height: 100px;
   width: 80%;
   margin: 0 10% 0;

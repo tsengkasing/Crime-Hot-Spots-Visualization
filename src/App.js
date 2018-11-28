@@ -121,16 +121,19 @@ class App extends Component {
      * dragging timeline
      */
     handleSliderChange = (v) => {
-        const {checkedType, timeInterval} = this.state;
+        let {checkedType, timeInterval, cluster: currentCluster} = this.state;
+        currentCluster = parseInt(currentCluster, 10);
         let data;
         switch (timeInterval) {
             case 'Hour':
                 data = this._data
                     .filter(({hour}) => hour === v)
+                    .filter(({cluster}) => cluster === currentCluster)
                     .filter(({label}) => checkedType[label]);
                 break;
             default: break;
         }
+        console.log(data);
         if (data) this.drawPoints(v, data);
     }
 
@@ -193,12 +196,14 @@ class App extends Component {
      * Select different Label
      */
     handleTypeSelect = (index, checked) => {
-        const {checkedType: prevCheckedType, currentLabel, useTimeLine} = this.state;
+        let {checkedType: prevCheckedType, currentLabel, useTimeLine, cluster: currentCluster} = this.state;
+        currentCluster = parseInt(currentCluster, 10);
         let checkedType = [...prevCheckedType];
         checkedType[index] = checked;
         this.setState({checkedType});
         let data = this._data
-            .filter(({label}) => checkedType[label]);
+            .filter(({label}) => checkedType[label])
+            .filter(({cluster}) => cluster === currentCluster);
         if (useTimeLine) data = data.filter(({hour}) => hour === currentLabel);
         this.drawPoints(currentLabel, data);
     }
