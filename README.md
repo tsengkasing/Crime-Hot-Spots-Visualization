@@ -34,6 +34,28 @@ $ python -m http.server 1234
 
 
 
+Gif of step by step ↓
+
+![crimehotspot-visual-step](https://user-images.githubusercontent.com/10103993/49131409-034b6100-f313-11e8-9db0-46c58db2e487.gif)
+
+
+
+## Tiny Conclusion
+
+After several attempts, we cluster the data into 3 cluster.
+
+- **Cluster 1** only appear in **night**(17:00 ~ 23:00)
+
+- **Cluster 2** only appear **before dawn** (0:00 ~ 7:00)
+
+- **Cluster 3** only appear in **day**(8:00 ~ 16:00)
+
+
+
+All of them will happen in City Center.
+
+However, **Cluster 1** and **Cluster 2** will happen more in **suburb** .
+
 
 
 
@@ -57,7 +79,7 @@ Next we input the following code ``data['Category'].unique()``.
 
 We can see that there are 39 kinds of crime **category**.
 
-```json
+```python
 ['NON-CRIMINAL', 'ROBBERY', 'ASSAULT', 'SECONDARY CODES',
        'VANDALISM', 'BURGLARY', 'LARCENY/THEFT', 'DRUG/NARCOTIC',
        'WARRANTS', 'VEHICLE THEFT', 'OTHER OFFENSES', 'WEAPON LAWS',
