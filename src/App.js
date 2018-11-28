@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
+
 import TimeLineSlider from './TimeLineSlider';
 import Checkbox from 'rc-checkbox';
 import 'rc-checkbox/assets/index.css';
 
 const colorTable = [
-    'blue',
     'red',
-    'purple'
+    'blue',
+    'green',
+    'purple',
+    '#000000',
+    '#CC0066',
+    '#339999',
+    '#99CCFF',
+    '#CCCCCC',
+    'yellow',
+    'orange',
 ];
 
 const circles = {};
 
+let cCount = 0;
+
 class App extends Component {
     constructor(props) {
         super(props);
+
+        this.cMap = {};
+
         this.dataSource = [];
         this._data = [];
         this.state = {
@@ -25,16 +40,46 @@ class App extends Component {
             currentLabel: 0,
             animated: '',
 
-            checkedType: [false, true, false]
+            useTimeLine: false,
+            cluster: '0',
+
+            checkedType: []
         };
     }
 
     componentDidMount() {
-        this.fetchCrimeData()
+        this.fetchResult()
+            .then(() => {
+                this.init();
+                console.log('Loaded.');
+            }).catch(e => window.alert(e));
+        /*this.fetchCrimeData()
             .then(() => {
                 this.init();
                 console.log('loaded.');
-            }).catch(e => window.alert(e));
+            }).catch(e => window.alert(e));*/
+    }
+
+    fetchResult = async () => {
+        let res;
+        res = await fetch('/category_map.json');
+        this.cMap = await res.json();
+
+        res = await fetch('/result-plot.json');
+        let plots = await res.json();
+        const _cMap = {};
+        for (const [category, digit] of plots) {
+            _cMap[digit] = category;
+        }
+        cCount = 2;
+        this.setState({checkedType: new Array(6).fill(true)});
+
+        res = await fetch('/result-data.json');
+        this.dataSource = await res.json();
+        for (let i in this.dataSource) {
+            let _c = this.dataSource[i]['Category'];
+            this.dataSource[i]['Category'] = this.cMap[_cMap[_c]]['category']
+        }
     }
 
     fetchCrimeData = async () => {
@@ -54,20 +99,20 @@ class App extends Component {
         const {checkedType, currentLabel} = this.state;
 
         this._data = this.dataSource
-            .map(record => {
-                record.length = 8;
-                const [distrct, hour, day, month, label, X, Y] = Array.from(record);
+            .map(({Category, Time, X, Y, ...props}) => {
+                const cluster = parseInt(props['class'], 10);
                 return {
-                    hour: hour,
-                    label: label, 
-                    center: {lat: Y, lng: X},
+                    hour: parseInt(Time.slice(0, 2), 10),
+                    label: Category,
+                    cluster: cluster,
+                    center: {lat: parseFloat(Y), lng: parseFloat(X)},
                     radius: 50,
-                    fillColor: colorTable[label]
+                    fillColor: colorTable[Category]
                 };
             });
         const data = this._data
             .filter(({label}) => checkedType[label])
-            .filter(({hour}) => hour === currentLabel)
+            // .filter(({hour}) => hour === currentLabel);
         this.drawPoints(currentLabel, data);
     }
 
@@ -118,46 +163,86 @@ class App extends Component {
     }
 
     /**
-     * Select different Class
+     * @param {string} value
+     */
+    handleSwitchCluster = value => {
+        const {checkedType, currentLabel, useTimeLine} = this.state;
+        this.setState({cluster: value});
+        let data = this._data
+            .filter(({label}) => checkedType[label])
+            .filter(({cluster}) => cluster === parseInt(value, 10));
+        if (useTimeLine) data = data.filter(({hour}) => hour === currentLabel);
+        console.log('length', data.length);
+        this.drawPoints(currentLabel, data);
+    }
+
+    handleUsingTimeLine = e => {
+        const checked = e.target.checked;
+        let {checkedType, currentLabel, cluster: currentCluster} = this.state;
+        currentCluster = parseInt(currentCluster, 10);
+        this.setState({useTimeLine: checked});
+        let data = this._data
+            .filter(({label}) => checkedType[label])
+            .filter(({cluster}) => cluster === currentCluster);
+        if (checked) data = data.filter(({hour}) => hour === currentLabel);
+        this.drawPoints(currentLabel, data);
+    }
+
+    /**
+     * Select different Label
      */
     handleTypeSelect = (index, checked) => {
-        const {checkedType: prevCheckedType, currentLabel} = this.state;
+        const {checkedType: prevCheckedType, currentLabel, useTimeLine} = this.state;
         let checkedType = [...prevCheckedType];
         checkedType[index] = checked;
         this.setState({checkedType});
-        const data = this._data
-            .filter(({label}) => checkedType[label])
-            .filter(({hour}) => hour === currentLabel);
+        let data = this._data
+            .filter(({label}) => checkedType[label]);
+        if (useTimeLine) data = data.filter(({hour}) => hour === currentLabel);
         this.drawPoints(currentLabel, data);
     }
 
     render() {
-        const {timeInterval, currentLabel, sliderMinValue, sliderMaxValue, checkedType, animated} = this.state;
+        const {
+            timeInterval, currentLabel, sliderMinValue, sliderMaxValue,
+            checkedType, animated, cluster, useTimeLine
+        } = this.state;
         return (
         <div className="App">
             <div className="drawer__layout">
                 <span className="title">Time Interval</span>
                 <span className="content">By {timeInterval}</span>
                 <span className="title">Time Period</span>
-                <span className={`content${animated}`}>{`${currentLabel}:00 - ${currentLabel + 1}:00`}</span>
+                {useTimeLine ?
+                   <span className={`content${animated}`}>{`${currentLabel}:00 - ${currentLabel + 1}:00`}</span> :
+                <span className="content">00:00 - 24:00</span>}
+                <div>
+                    <Checkbox checked={useTimeLine}
+                        onChange={this.handleUsingTimeLine} />
+                    <span>Using TimeLine</span>
+                </div>
                 <span className="title">Cluster</span>
+                <div className="clusterTable">
+                    <RadioGroup onChange={ this.handleSwitchCluster } value={cluster} >
+                        {new Array(cCount).fill(0).map((_, i) =>
+                            <RadioButton key={i} value={`${i}`}>Cluster {i + 1}</RadioButton>)}
+                    </RadioGroup>
+                </div>
+                <span className="title">Crime Category</span>
                 <div className="colorTable">
-                    {colorTable.map((value, index) =>
+                    {this.cMap['mapping'] && colorTable.slice(0, 6).map((value, index) =>
                         <div key={value} className="color__item">
                             <Checkbox checked={checkedType[index]}
                                 onChange={(e) => this.handleTypeSelect(index, e.target.checked)} />
                             <span className="color__dot" style={{backgroundColor: value}}></span>
-                            <span>Cluster {index + 1}</span>
+                            <span>{this.cMap['mapping'][index]}</span>
                         </div>
                         )}
                 </div>
-                <span className="title">Crime Category</span>
-                <span className="content">Robbery</span>
-                <span className="title">Crime Data Year</span>
-                <span className="content">2017</span>
             </div>
-            <TimeLineSlider useRange={false} onUpdate={this.handleSliderChange}
-                min={sliderMinValue} max={sliderMaxValue} />
+            {useTimeLine &&
+                <TimeLineSlider useRange={false} onUpdate={this.handleSliderChange}
+                    min={sliderMinValue} max={sliderMaxValue} /> }
         </div>
         );
     }

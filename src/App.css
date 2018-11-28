@@ -3,6 +3,10 @@
   height: 100%;
 }
 
+span, div {
+  font-family: "Ping Fang", Helvetica, sans-serif
+}
+
 .drawer__layout {
   text-align: center;
   display: flex;
@@ -31,7 +35,7 @@
 }
 .content {
   font-size: 1.4rem;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .blink {
@@ -52,11 +56,16 @@
   }
 }
 
+.clusterTable {
+  margin: 0 32px;
+}
+
 .colorTable {
   margin: 0 16px 32px;
 }
 
 .color__item {
+  margin: 4px 0;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
